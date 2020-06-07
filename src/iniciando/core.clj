@@ -6,6 +6,7 @@
   (println x "Hello, World!"))
 
 
-(defn ejemplo
+(defn fdasdfasdf
+  "I don't do a whole lot."
   [x]
-  (println x " asdf asdf"))
+  (println x "Hello, World!"))
