@@ -37,7 +37,7 @@
   (inc (count (take-while #(> pos %) tri))))
 
 (defn connect
-  "Para una coneccion mutua entre 2 posiciones"
+  "Para una conexion mutua entre 2 posiciones"
   [board max-pos pos neighbor destination]
   (if (<= destination max-pos)
     (reduce (fn [new-board [p1 p2]]
