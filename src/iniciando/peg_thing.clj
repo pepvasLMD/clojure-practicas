@@ -48,12 +48,10 @@
 
 (connect {} 15 1 2 4)
 
-(assoc-in {} [[1 4] :connections [4 1]] 2)
+
+(assoc-in {} [:cookie :monster :vocals] "Finntroll")
+
+(get-in {:cookie {:monster {:vocals "Finntroll"}}} [:cookie :monster])
 
 
-
-(reduce (fn [new-board [p1 p2]]
-          (assoc-in new-board [p1 :connections p2] 2))
-        {}
-        [[1 4] [4 1]])
-
+(assoc-in {} [1 :connections 4] 2)
