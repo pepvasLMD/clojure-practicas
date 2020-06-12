@@ -270,7 +270,7 @@
        (clojure.string/lower-case input)))))
 
 
-(get-input)
+;(get-input)
 
 (defn characters-as-strings
   [cadena]
@@ -319,7 +319,7 @@
     (prompt-empty-peg board)))
 
 
-(Integer. (get-input 5))
+;(Integer. (get-input 5))
 
 
 (defn game-over
