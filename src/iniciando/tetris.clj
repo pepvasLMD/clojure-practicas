@@ -75,13 +75,15 @@
 
 
 
-(defn my-zip [x y acc]
-  (if (or (empty? x) (empty? y))
-    acc
-    (recur (rest x) (rest y) (conj acc [(first x) (first y)]))))
+(defn my-zip [x y]
+  (map vector x y))
+
+(defn get-interest [x y]
+  (+ x (* x (/ y 100))))
+
 
 (defn sum-interest [x]
-  (let [intereses (map #(+ (%1 0) (* (%1 0) (/ (%1 1) 100))) x)]
+  (let [intereses (map #(get-interest (first %1) (second %1)) x)]
     (reduce + (first intereses) (rest intereses))))
 
 (defn combinaciones [x]
@@ -98,8 +100,7 @@
                       (map #(cons x %) (permutations (remove #{x} s)))))
       [s])))
 
-(defn get-interest [x y]
-  (+ x (* x (/ y 100))))
+
 
 (defn reduce-debt [debts pay]
   (reduce (fn [x y]
@@ -112,7 +113,7 @@
 
 (defn coverDebts [salary debts interests]
   (let [max-pay (/ salary 10)
-        zip (my-zip debts interests [])
+        zip (my-zip debts interests)
         comb (combinaciones zip)
         perm (permutations debts)
         ]
@@ -121,17 +122,94 @@
 
 (coverDebts 50 [2 2 5] [200 100 150])
 
+(map (fn [x] (get-interest (first x) (second x))) [[2 200] [2 100] [5 150]])
 
-
+(sum-interest (my-zip [2 2 5] [200 100 150]) )
 
 
 (permutations [1 2 3])
 
 
+(def b1 '[3 - - - - 5 - 1 -
+          - 7 - - - 6 - 3 -
+          1 - - - 9 - - - -
+          7 - 8 - - - - 9 -
+          9 - - 4 - 8 - - 2
+          - 6 - - - - 5 - 1
+          - - - - 4 - - - 6
+          - 4 - 7 - - - 2 -
+          - 2 - 6 - - - - 3])
+
+
+
+(defn prep [board]
+  (map #(partition 3 %)
+       (partition 9 board)))
 
 
 
 
+(defn print-board [board]
+  (let [row-sep (apply str (repeat 37 "-"))]
+    (println row-sep)
+    (dotimes [row (count board)]
+      (print "| ")
+      (doseq [subrow (nth board row)]
+        (doseq [cell (butlast subrow)]
+          (print (str cell " ")))
+        (print (str (last subrow) " | ")))
+      (println)
+      (when (zero? (mod (inc row) 3))
+        (println row-sep)))))
+
+
+
+(defn rows [board sz]
+  (partition sz board))
+
+
+(defn row-for [board index sz]
+  (nth (rows board sz) (/ index 9)))
+
+
+
+(defn column-for [board index sz]
+  (let [col (mod index sz)]
+    (map #(nth % col)
+         (rows board sz))))
+
+
+(defn subgrid-for [board i]
+  (let [rows (rows board 9)
+        sgcol (/ (mod i 9) 3)
+        sgrow (/ (/ i 9) 3)
+        grp-col (column-for (mapcat #(partition 3 %) rows) sgcol 3)
+        grp (take 3 (drop (* 3 (int sgrow)) grp-col))]
+    (flatten grp)))
+
+
+(defn numbers-present-for [board i]
+  (set
+    (concat (row-for board i 9)
+            (column-for board i 9)
+            (subgrid-for board i))))
+
+
+(-> b1 prep print-board)
+
+
+(row-for b1 1 9)
+
+
+(subgrid-for b1 1)
+
+
+(numbers-present-for b1 1)
+
+(numbers-present-for (assoc b1 1 8) 1)
+
+(set/difference #{1 2 3 4 5 6 7 8 9}
+                (numbers-present-for b1 1))
 
 
 ;(.show (javax.swing.JFrame.))
