@@ -9,9 +9,25 @@
     (for [i (range (count a-vec))]
       (concat (subvec a-vec i) (subvec a-vec 0 i)))))
 
-(defn containsCloseNums [nums k]
-  (let [x (map vector (range (count nums)) nums)]
-    (into (sorted-map) x)))
+(defn zip [x y]
+  (map vector x y))
 
-(rotaciones (containsCloseNums nums 2))
+(defn recursivo [nums k]
+  (if (empty? nums)
+    false
+    (let [indice-valor (first nums)
+          valor (second indice-valor)
+          indices (map first (take-while #(== valor (second %)) nums))
+          diferencias (map #(- (second %) (first %)) (zip indices (rest indices)))]
+      (if (some #(<= % k) diferencias) true (recursivo (drop-while #(== valor (second %)) nums) k) ))))
+
+(defn containsCloseNums [nums k]
+  (let [x (zip (range (count nums)) nums)
+        ordenado (sort-by second x)]
+    (recursivo ordenado k)))
+
+
+(containsCloseNums nums 3)
+
+
 
