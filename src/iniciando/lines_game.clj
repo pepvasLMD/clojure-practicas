@@ -21,6 +21,15 @@
     (recursivo ordenado k)))
 
 
+(defn containsCloseNumsV2 [n k]
+  ((reduce-kv
+     (fn [z i x]
+       (assoc z x (+ k i 1)
+                :r (or (> (z x i) i) (z :r) )) )
+     {:r false} n )
+    :r ))
+
+
 (containsCloseNums (range 0 55000) 3)
 
 
@@ -54,10 +63,40 @@
 (defn make-move [field origen destino ball]
   (fill-cell (empty-cell field origen) destino ball))
 
-(defn check-horizontal [field coordenada]
-  (let [row (get field (first coordenada))
-        ball (get-in field coordenada)]
-    (filter )))
+(defn particion [coll x]
+  [(take x coll) (drop x coll)])
+
+(defn check-horizontal [field [x y]]
+  (let [row (get field x)
+        ball (get-in field [x y])
+        dividir (particion row x)
+        p1 (count (take-while #(= ball %) (reverse (first dividir))))
+        p2 (count (take-while #(= ball %) (second dividir)))]
+    (+ p1 p2)))
+
+
+(defn check-vertical [field [x y]]
+  (let [col (reduce #(conj %1 (%2 y)) [] field)
+        ball (get-in field [x y])
+        dividir (particion col y)
+        p1 (count (take-while #(= ball %) (reverse (first dividir))))
+        p2 (count (take-while #(= ball %) (second dividir)))]
+    (+ p1 p2)))
+
+(defn check-diagonal [field coordenada]
+  (let [col (reduce #(conj %1 (%2 (second coordenada))) [] field)
+        ball (get-in field coordenada)
+        dividir (partition (int (/ (count col) 2)) col )
+        p1 (count (take-while #(= ball %) (reverse (first dividir))))
+        p2 (count (take-while #(= ball %) (second dividir)))]
+    (+ p1 p2)))
+
+(defn diagonal [field [x y]]
+  (let [diferencia (max (- x y) (- y x))]
+    (filterv #(not (nil? %)) (first (reduce (fn [x y] [(conj (first x) (get y (second x))) (inc (second x))]) [[] diferencia] field)))))
+
+
+
 
 
 (defn recursividad [field or-des n-balls new-balls-c]
@@ -80,7 +119,14 @@
 (empty-cell field [0 1])
 (fill-cell field [0 1] 'R')
 (make-move field (first clicks) (second clicks) 'R')
-(check-horizontal field (clicks 1))
+
+(particion (first field) 4)
+(check-horizontal field [7 7])
+(check-vertical field [7 7])
+
+(diagonal field [3 0])
+
+
 
 
 (linesGame field clicks new-balls new-balls-coordinates)
