@@ -2,7 +2,6 @@
 
 (def matrix [["1"] ["1"]])
 
-
 (defn get-cuadrado [matrix x y n]
   (let [cuadrado (reduce (fn [cuadrado row] (conj cuadrado (take n (drop x row)))) [] (take n (drop y matrix)))]
     (if (= (count cuadrado) (count (first cuadrado))) cuadrado []) ))
@@ -25,6 +24,5 @@
 
 (defn maximalSquare [matrix]
   (subcuadrados matrix 0 0 1 0))
-
 
 (maximalSquare (repeat 100 (repeat 100 "1")))
