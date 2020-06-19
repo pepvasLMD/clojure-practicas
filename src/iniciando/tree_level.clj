@@ -6,17 +6,12 @@
 
 (struct BST 1 )
 
-
-
-
 (defn insertarL 
   ([arbol val] (insertarL arbol val nil nil))
   ([arbol val l] (insertarL arbol val l nil))
   ([arbol val l r]
    (let [izq (struct BST val l r)]
      (assoc arbol :left izq))))
-
-
 
 (def arbol (struct BST 1))
 
