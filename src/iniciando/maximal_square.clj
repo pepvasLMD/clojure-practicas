@@ -1,37 +1,30 @@
 (ns iniciando.maximal-square)
 
-(def matrix [["1","0","1","1","1"],
-             ["1","0","1","1","1"],
-             ["1","1","1","1","1"],
-             ["1","0","0","1","0"],
-             ["1","0","0","1","0"]])
+(def matrix [["1"] ["1"]])
 
 
-(defn get-cuadrado [matrix xi yi xf yf]
-  (reduce (fn [x y] (conj x (take xf (drop xi y)))) [] (take yf (drop yi matrix))))
+(defn get-cuadrado [matrix x y n]
+  (let [cuadrado (reduce (fn [cuadrado row] (conj cuadrado (take n (drop x row)))) [] (take n (drop y matrix)))]
+    (if (= (count cuadrado) (count (first cuadrado))) cuadrado []) ))
 
 (defn fill-posiciones? [matrix]
-  (reduce (fn [x y] (if (false? x) x (not (some #(= 0 (int %)) y)))) true matrix))
+  (if (empty? matrix)
+    false
+    (reduce (fn [x y] (if (false? x) x (not (some #(= "0" %) y)))) true matrix)))
 
-(defn get-permutaciones [matrix]
-  (let [max-y (count matrix)
-         max-x (count (first matrix))]
-    (for [x (range max-x)
-          y (range max-y)
-          xf (range max-x)
-          yf (range max-y)]
-      [x y xf yf])))
-
-(defn area-matrix [matrix]
-  (let [num-rows (count matrix)
-         num-cols (count (first matrix))]
-    (* num-rows num-cols)))
+(defn subcuadrados [matrix x y n maximo]
+  (let [max-x (count (first matrix))
+        max-y (count matrix)]
+    (cond
+      (and (> (+ x n) max-x) (> (+ y n) max-y)) maximo
+      (fill-posiciones? (get-cuadrado matrix x y n))
+      (if (> (* n n) maximo) (recur matrix x y (inc n) (* n n)) (recur matrix x y (inc n) maximo))
+      (> max-x (+ x n)) (recur matrix (inc x) y 1 maximo)
+      (> max-y (+ y n)) (recur matrix 0 (inc y) 1 maximo)
+      :else maximo)))
 
 (defn maximalSquare [matrix]
-  (let [perm (get-permutaciones matrix)
-        cuadrados (map (fn [x] (get-cuadrado matrix (x 0) (x 1) (x 2) (x 3))) perm)
-        areas (map area-matrix (filter fill-posiciones? cuadrados))]
-    (if (empty? areas) 0 (reduce max areas))))
+  (subcuadrados matrix 0 0 1 0))
 
-(maximalSquare[])
-(fill-posiciones?  matrix)
+
+(maximalSquare (repeat 100 (repeat 100 "1")))
