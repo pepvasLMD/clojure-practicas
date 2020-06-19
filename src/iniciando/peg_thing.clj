@@ -2,8 +2,6 @@
   (:require [clojure.set :as set]
             [clojure.string :as s]))
 
-
-
 (declare successful-move prompt-move game-over query-rows)
 
 (defn tri*
@@ -317,10 +315,6 @@
   (let [rows (Integer. (get-input 5))
         board (new-board rows)]
     (prompt-empty-peg board)))
-
-
-;(Integer. (get-input 5))
-
 
 (defn game-over
   "Announce the game is over and prompt to play again"
