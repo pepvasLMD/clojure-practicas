@@ -1,4 +1,5 @@
-(ns iniciando.reverseInParentheses)
+(ns iniciando.reverseInParentheses
+  (:require [clojure.string :as string]))
 
 
 (def parentesis-pattern #"\(\w*\)")
@@ -28,3 +29,6 @@
 (parser sample)
 
 (reverseInParentheses "foo(bar)baz(blim)")
+
+
+(parentesis-reversa "asd()fs")
