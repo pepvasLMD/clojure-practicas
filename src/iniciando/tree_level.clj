@@ -17,3 +17,29 @@
 
 
 (insertarL arbol 10 )
+
+(defn recursivo [min1 min2_10 min11 s mins]
+  (cond
+    (= s 0) mins
+    (< s 0) (dec mins)
+    (= mins 0) (recur min1 min2_10 min11 (- s min1) (inc mins))
+    (< mins 10) (recur min1 min2_10 min11 (- s min2_10) (inc mins))
+    :else (int (+ mins (/ s min11)))))
+
+
+(defn phoneCall [min1 min2_10 min11 s]
+  (recursivo min1 min2_10 min11 s 0))
+
+(phoneCall 1 2 1 6)
+
+
+(defn a [t k n]
+  )
+
+
+(defn treeLevelSum [t k])
+
+
+(defn fareEstimator [ride_time ride_distance cost_per_minute cost_per_mile]
+  (let [union (map vector cost_per_minute cost_per_mile)]
+    (map (fn [[x y]] (+ (* x ride_time) (* y ride_distance))) union)))
