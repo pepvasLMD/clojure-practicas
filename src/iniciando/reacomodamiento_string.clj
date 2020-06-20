@@ -48,6 +48,9 @@
 (permutations ["aba"
                "bbb"])
 
+(let [coll ["aba" "bbb" "bab"]]
+  (for [()]))
+
 
 (rotations ["aba"
             "bbb"
