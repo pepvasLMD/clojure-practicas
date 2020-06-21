@@ -43,3 +43,17 @@
 (defn fareEstimator [ride_time ride_distance cost_per_minute cost_per_mile]
   (let [union (map vector cost_per_minute cost_per_mile)]
     (map (fn [[x y]] (+ (* x ride_time) (* y ride_distance))) union)))
+
+
+(defn calcular-distancia [xi xf]
+  (let [x1 (- xi (int xi))
+        x2 (- xf (int xf))
+        xT [ (+ (- 1 x1) (- 1 x2)) (+ x1 (- 1 x2)) (+ (- 1 x1) x2)]]
+    [xT]))
+
+
+(defn perfectCity [[xi yi] [xf yf]]
+  (calcular-distancia xi xf))
+
+
+(perfectCity [0.4 1] [0.9 3])
