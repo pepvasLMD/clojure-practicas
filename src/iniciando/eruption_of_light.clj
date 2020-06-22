@@ -17,11 +17,6 @@
 
 (findEmailDomain "John.Smith@example.com")
 
-(defn palindromo [subcadena cadena]
-  (if (= subcadena cadena)
-    (str subcadena (apply str (reverse subcadena)))
-    (let [pal (str subcadena (apply str (reverse (butlast subcadena))))]
-      (if (.contains pal cadena) pal (recur (str subcadena (get cadena (count subcadena))) cadena)))))
 
 (defn palindromoV2 [subcadena cadena]
   (let [pal (str subcadena (apply str (reverse (butlast subcadena))))
@@ -52,3 +47,9 @@
 
 
 (electionsWinners [2 3 5 2] 3)
+
+
+(defn isMAC48Address [inputString]
+  (not (nil? (re-find #"^([0-9A-F]{2}-){5}[0-9A-F]{2}$" inputString))))
+
+(isMAC48Address "00-1B-63-84-45-E22")
