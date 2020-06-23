@@ -44,5 +44,30 @@
                    [2, 2, 1]])
 
 
-(defn digitsProduct [product num]
-  )
+(defn product-digits [num]
+  (loop [n num acc 1]
+    (if (> n 0) (recur (int (/ n 10)) (* acc (mod n 10))) acc)))
+
+(defn digitsProduct [product]
+  (loop [n 11]
+    (if (> product (product-digits n)) (recur (inc n)) n)))
+
+(= 450 (product-digits 2559))
+(digitsProduct 450)
+
+(def work (atom 459))
+(def i 7)
+
+(defn digitsProduct2 [product]
+  (or (->> (range 1 10000)
+           (map (fn [x] [(apply * (map (comp read-string str) (str x))) x]))
+           (drop-while (comp (complement #{product}) first))
+           first last) -1))
+
+
+(digitsProduct2 450)
+
+
+
+
+(defn fileNaming [names] )
