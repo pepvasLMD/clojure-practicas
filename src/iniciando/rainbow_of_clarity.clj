@@ -32,10 +32,21 @@
 
 (chessKnight "a1")
 
+(defn a [n]
+  (let [digitos (map-indexed (fn [i x] [i (int x)]) (str n))
+        minimo (reduce (fn [[i x] [i2 x2]] (if (< x2 x) [i2 x2] [i x])) (first digitos) digitos)]
+    (Integer/parseInt (apply str (map (comp char second) (into (vec (take (first minimo) digitos)) (drop (inc (first minimo)) digitos))))))
+  )
 
 (defn deleteDigit [n]
-  (let [digitos (map-indexed (fn [i x] [i (int x)]) (str n))
-        minimo (apply min digitos)]
-    digitos))
+  (let [cadena (str n)
+        coll (for [x (range (count cadena))] [(subs cadena 0 x) (subs cadena (inc x))])
+        maximo (apply max (map (fn [[x y]] (Integer/parseInt (str x y))) coll))]
+    maximo))
 
-(deleteDigit 123)
+(deleteDigit 152)
+
+
+
+(comp str char)
+
