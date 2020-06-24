@@ -93,10 +93,50 @@
 
 
 
-(defn spiralNumbers [n]
-  (let [matrix (repeat n (repeat n 0))]
-    (loop [y 0 x 0 n 1 matrix (vec (repeat 5 (vec (repeat 5 0))))]
+(defn spiralNumbers [num]
+  (let [mayor (* num num)]
+    (loop [y 0 x 0 n 1 m (vec (repeat num (vec (repeat num 0)))) d :right]
       (cond
-        (if (> (get-in matrix [y x]) 0) (recur y x (inc n) (assoc-in matrix [y x] n)))))))
+        (> n mayor) m
+        (= (get-in m [y x]) 0) (recur y x (inc n) (assoc-in m [y x] n) d)
+        (and (= d :right) (nil? (get-in m [y (inc x)]))) (recur y x n m :down)
+        (and (= d :right) (> (get-in m [y (inc x)]) 0)) (recur y x n m :down)
+        (= d :right) (recur y (inc x) n m d)
+        (and (= d :down) (nil? (get-in m [(inc y) x]))) (recur y x n m :left)
+        (and (= d :down) (> (get-in m [(inc y) x]) 0)) (recur y x n m :left)
+        (= d :down) (recur (inc y) x n m d)
+        (and (= d :left) (nil? (get-in m [y (dec x)]))) (recur y x n m :up)
+        (and (= d :left) (> (get-in m [y (dec x)]) 0)) (recur y x n m :up)
+        (= d :left) (recur y (dec x) n m d)
+        (and (= d :up) (nil? (get-in m [(dec y) x]))) (recur y x n m :right)
+        (and (= d :up) (> (get-in m [(dec y) x]) 0)) (recur y x n m :right)
+        (= d :up) (recur (dec y) x n m d)
+        :else m))))
 
-(spiralNumbers 5)
+(spiralNumbers 100)
+
+(def grid [[1, 3, 2, 5, 4, 6, 9, 8, 7],
+           [4, 6, 5, 8, 7, 9, 3, 2, 1],
+           [7, 9, 8, 2, 1, 3, 6, 5, 4],
+           [9, 2, 1, 4, 3, 5, 8, 7, 6],
+           [3, 5, 4, 7, 6, 8, 2, 1, 9],
+           [6, 8, 7, 1, 9, 2, 5, 4, 3],
+           [5, 7, 6, 9, 8, 1, 4, 3, 2],
+           [2, 4, 3, 6, 5, 7, 1, 9, 8],
+           [8, 1, 9, 3, 2, 4, 7, 6, 5]])
+
+(defn get-col [field n]
+  (reduce #(conj %1 (%2 n)) [] field))
+
+(defn get-row [field n]
+  (get field n))
+
+
+(defn sudoku [grid]
+  (let [check-row-col (some #(not (= 9 (count (set (get-row grid %))) (count (set (get-col grid %))))) (range 9))
+        cuadrados (map (fn [[x y n]] (get-cuadrado grid x y n)) (for [x (range 3) y (range 3)] [(* 3 x) (* 3 y) 3]))
+        check-cuadrados (some #(not (= 9 (count (set %)))) (map (fn [x] (into [] cat x)) cuadrados))]
+    (if (nil? check-row-col) (nil? check-cuadrados) false)))
+
+(sudoku grid)
+
