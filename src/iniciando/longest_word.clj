@@ -69,5 +69,34 @@
 
 
 
+(defn new-name [name names]
+  (if (< (.indexOf names name) 0)
+    name
+    (loop [n 1]
+      (if (>= (.indexOf names (str name "(" n ")")) 0)
+        (recur (inc n))
+        (str name "(" n ")")))))
 
-(defn fileNaming [names] )
+(defn fileNaming [names]
+  (reduce #(conj %1 (new-name %2 %1)) [] names))
+
+(fileNaming ["doc" "doc" "image" "doc(1)" "doc"])
+
+(new-name "doc" ["doc" "image" "doc(1)" "doc"])
+
+
+
+(defn messageFromBinaryCode [code]
+  (apply str (map (comp char (fn [x] (Integer/parseInt (apply str x) 2))) (partition 8 code))))
+
+(messageFromBinaryCode "010010000110010101101100011011000110111100100001")
+
+
+
+(defn spiralNumbers [n]
+  (let [matrix (repeat n (repeat n 0))]
+    (loop [y 0 x 0 n 1 matrix (vec (repeat 5 (vec (repeat 5 0))))]
+      (cond
+        (if (> (get-in matrix [y x]) 0) (recur y x (inc n) (assoc-in matrix [y x] n)))))))
+
+(spiralNumbers 5)
