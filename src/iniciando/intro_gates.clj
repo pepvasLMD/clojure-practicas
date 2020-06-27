@@ -60,10 +60,16 @@
       :else false)))
 
 
-(defn squaresUnderQueenAttack [n [q1 q2] queries]
-  (map (fn [[x y]] (or x y)) (map vector (map #(chocan? q1 %) queries) (map #(chocan? q2 %) queries))))
+(defn squarequeen [q queries]
+  (map #(chocan? q %) queries))
+
+
+(defn squaresUnderQueenAttack [n queens queries]
+  (let [a (map #(squarequeen % queries) queens)
+        b (reduce (fn [x y] (map (fn [[x y]] (or x y)) (map vector x y))) (first a) (rest a))]
+    (if (nil? b) [false] b)))
 
 
 (squaresUnderQueenAttack 5 [[1 1] [3 2]] [[1 1] [0 3] [0 4] [3 4] [2 0] [4 3] [4 0]])
 
-(chocan? [1 1] [3 2] )
+(squarequeen [1 1] [[1 1] [0 3] [0 4] [3 4] [2 0] [4 3] [4 0]])
