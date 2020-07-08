@@ -1,4 +1,4 @@
-(ns iniciando.reverseInParentheses
+(ns iniciando.codesignal.reverseInParentheses
   (:require [clojure.string :as string]))
 
 

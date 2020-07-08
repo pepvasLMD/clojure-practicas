@@ -1,4 +1,4 @@
-(ns iniciando.eruption-of-light)
+(ns iniciando.codesignal.eruption-of-light)
 
 
 (defn recursivo [cadena contador caracter]

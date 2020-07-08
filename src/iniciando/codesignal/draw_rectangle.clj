@@ -1,4 +1,4 @@
-(ns iniciando.draw-rectangle)
+(ns iniciando.codesignal.draw-rectangle)
 
 
 (def canvas  [["a","a","a","a","a","a","a","a"],

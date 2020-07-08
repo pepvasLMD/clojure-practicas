@@ -1,4 +1,4 @@
-(ns iniciando.dark-wilderness)
+(ns iniciando.codesignal.dark-wilderness)
 
 (defn growingPlant
   ([u d dH] (growingPlant u d dH 1))

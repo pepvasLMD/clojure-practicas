@@ -1,4 +1,4 @@
-(ns iniciando.diving-deeper)
+(ns iniciando.codesignal.diving-deeper)
 
 
 

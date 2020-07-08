@@ -1,4 +1,4 @@
-(ns iniciando.simplify-path
+(ns iniciando.codesignal.simplify-path
   (:require [clojure.string :as string]))
 
 (def path "/home/a/./x/../b//c/")

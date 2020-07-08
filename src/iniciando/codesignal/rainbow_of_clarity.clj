@@ -1,4 +1,4 @@
-(ns iniciando.rainbow-of-clarity)
+(ns iniciando.codesignal.rainbow-of-clarity)
 
 (defn isDigit [symbol]
   (and (>= (int symbol) 48) (> 58 (int symbol))))

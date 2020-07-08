@@ -1,4 +1,4 @@
-(ns iniciando.tree-level)
+(ns iniciando.codesignal.tree-level)
 
 (def binary-tree "(0(5(6()())(14()(9()())))(7(1()())(23()())))")
 

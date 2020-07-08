@@ -1,4 +1,4 @@
-(ns iniciando.longest-word)
+(ns iniciando.codesignal.longest-word)
 
 (defn longestWord
   ([t] (longestWord t "" ""))

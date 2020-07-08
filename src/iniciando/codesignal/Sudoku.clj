@@ -1,4 +1,4 @@
-(ns iniciando.Sudoku)
+(ns iniciando.codesignal.Sudoku)
 
 
 (def b1 '[3 - - - - 5 - 1 -

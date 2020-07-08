@@ -1,4 +1,4 @@
-(ns iniciando.maximal-square)
+(ns iniciando.codesignal.maximal-square)
 
 (def matrix [["1"] ["1"]])
 

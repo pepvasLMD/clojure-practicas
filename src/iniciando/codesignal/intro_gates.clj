@@ -1,4 +1,4 @@
-(ns iniciando.intro-gates)
+(ns iniciando.codesignal.intro-gates)
 
 
 (defn addTwoDigits [n]

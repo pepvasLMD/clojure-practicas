@@ -1,4 +1,4 @@
-(ns iniciando.lines-game)
+(ns iniciando.codesignal.lines-game)
 
 
 (def nums [0 1 2 3 5 2])

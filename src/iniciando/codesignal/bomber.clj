@@ -1,4 +1,4 @@
-(ns iniciando.bomber)
+(ns iniciando.codesignal.bomber)
 
 
 (def field [["0", "0", "E", "0"],
