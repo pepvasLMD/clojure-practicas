@@ -46,7 +46,7 @@
 (class (lz-rec-step [1 2 3 4]))
 ;=> clojure.lang.LazySeq
 
-(dorun (lz-rec-step (range 200000)))
+(dorun (lz-rec-step (range 200)))
 
 
 (defn pi
